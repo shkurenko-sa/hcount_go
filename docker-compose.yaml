@@ -1,0 +1,31 @@
+version: '3.19'
+
+services:
+  api:
+    build: 
+      context: .
+      dockerfile: ./Dockerfile
+    command: sh -c "app"
+    volumes:
+      - ./:/app/
+    ports:
+      - 8089:8089
+    networks:
+      - service_net
+
+  nginx:
+    build: 
+      context: .
+      dockerfile: ./config/nginx/nginx.Dockerfile
+    depends_on:
+      - api
+    ports:
+      - 8083:8083
+    volumes:
+      - ./config/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+    networks:
+      - service_net
+
+
+networks:
+  service_net:
