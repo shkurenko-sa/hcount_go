@@ -1,15 +1,10 @@
 package server
 
-import "github.com/shkurenko-sa/hcount_go/internal/receiver"
+import "github.com/shkurenko-sa/hcount_go/internal/users"
 
 func (s *Server) setupRouter() {
-	test := s.router.Group("/")
+	test := s.router.Group("/user")
 	{
-		test.GET("", receiver.Test)
-	}
-
-	receive := s.router.Group("/receiver")
-	{
-		receive.Any("/request")
+		test.GET("/test", users.Test)
 	}
 }

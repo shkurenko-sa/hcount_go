@@ -26,6 +26,26 @@ services:
     networks:
       - service_net
 
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: hcount
+      MONGO_INITDB_ROOT_PASSWORD: password
+    networks:
+      - service_net
 
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: hcount
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+      ME_CONFIG_MONGODB_URL: mongodb://hcount:password@mongo:27017/
+    networks:
+      - service_net
+  
 networks:
   service_net:
